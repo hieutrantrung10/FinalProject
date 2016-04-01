@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Model.Dao;
 using Model.EF;
+using OnlineShopv2.Common;
 using PagedList;
 
 namespace OnlineShopv2.Areas.Admin.Controllers
@@ -12,6 +13,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         // GET: Admin/Product
+        [HasPermission(RoleID = "VIEW_PRODUCT")]
         public ActionResult Index(string searchString,int page = 1, int pageSize=10)
         {
             var dao = new ProductDao();
@@ -20,6 +22,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
             return View(product as IPagedList<Product>);
         }
         [HttpGet]
+        [HasPermission(RoleID = "ADD_PRODUCT")]
         public ActionResult Create()
         {
             SetViewBag();
@@ -28,6 +31,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasPermission(RoleID = "ADD_PRODUCT")]
         public ActionResult Create(Product product)
         {
             if (ModelState.IsValid)
@@ -49,6 +53,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [HasPermission(RoleID = "EDIT_PRODUCT")]
         public ActionResult Edit(long id)
         {
             var dao = new ProductDao();
@@ -59,6 +64,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [HasPermission(RoleID = "EDIT_PRODUCT")]
         public ActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
@@ -78,6 +84,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
             return View();
         }
         [HttpDelete]
+        [HasPermission(RoleID = "DELETE_PRODUCT")]
         public ActionResult Delete(long id)
         {
             var dao = new ProductDao();

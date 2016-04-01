@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineShopv2.Common;
 using PagedList;
 
 namespace OnlineShopv2.Areas.Admin.Controllers
@@ -12,7 +13,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
     public class ContentController : BaseController
     {
         // GET: Admin/Content
-        
+        [HasPermission(RoleID = "VIEW_NEWS")]
         public ActionResult Index(string searchString,int page = 1, int pageSize=10)
         {
             var dao = new ContentDao();
@@ -21,6 +22,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
             return View(model as IPagedList<Content>);
         }
         [HttpGet]
+        [HasPermission(RoleID = "ADD_NEWS")]
         public ActionResult Create()
         {
             SetViewBag();
@@ -28,6 +30,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
+        [HasPermission(RoleID = "ADD_NEWS")]
         public ActionResult Create(Content model)
         {
             if (ModelState.IsValid)
@@ -43,6 +46,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [HasPermission(RoleID = "EDIT_NEWS")]
         public ActionResult Edit(long id)
         {
             var dao = new ContentDao();
@@ -52,6 +56,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
         }
        
         [HttpPost]
+        [HasPermission(RoleID = "EDIT_NEWS")]
         public ActionResult Edit(Content content)
         {
             if (ModelState.IsValid)
@@ -73,6 +78,7 @@ namespace OnlineShopv2.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasPermission(RoleID = "DELETE_NEWS")]
         public ActionResult Delete(long id)
         {
             var dao = new ContentDao();
