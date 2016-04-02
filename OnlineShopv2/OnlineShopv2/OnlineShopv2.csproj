@@ -204,9 +204,12 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\DistrictModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ProvinceModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\VillageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Common\UserLogin.cs" />
@@ -1688,6 +1691,7 @@
     <Content Include="assets\client\css\global.css" />
     <Content Include="assets\client\css\slider.css" />
     <Content Include="assets\client\css\style.css" />
+    <Content Include="assets\client\data\Provinces_Data.xml" />
     <Content Include="assets\client\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\client\font\glyphicons-halflings-regular.svg" />
     <Content Include="assets\client\images\about_img.jpg" />
@@ -1743,6 +1747,7 @@
     <Content Include="assets\client\js\bootstrap.min.js" />
     <Content Include="assets\client\js\controller\cartController.js" />
     <Content Include="assets\client\js\controller\contactController.js" />
+    <Content Include="assets\client\js\controller\userController.js" />
     <Content Include="assets\client\js\easing.js" />
     <Content Include="assets\client\js\easyResponsiveTabs.js" />
     <Content Include="assets\client\js\jquery-1.12.0.min.js" />
