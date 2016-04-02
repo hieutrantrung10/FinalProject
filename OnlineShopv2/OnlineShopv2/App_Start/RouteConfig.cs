@@ -40,6 +40,12 @@ namespace OnlineShopv2
                namespaces: new[] { "OnlineShopv2.Controllers" }
            );
             routes.MapRoute(
+               name: "Search",
+               url: "tim-kiem",
+               defaults: new { controller = "Product", action = "Search", id = UrlParameter.Optional },
+               namespaces: new[] { "OnlineShopv2.Controllers" }
+           );
+            routes.MapRoute(
              name: "News",
              url: "tin-tuc",
              defaults: new { controller = "Content", action = "Index", id = UrlParameter.Optional },
