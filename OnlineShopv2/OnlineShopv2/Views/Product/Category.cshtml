@@ -1,5 +1,4 @@
-﻿@using Model.EF
-@model List<Model.ViewModel.ProductViewModel>
+﻿@model List<Model.ViewModel.ProductViewModel>
 @{
     var category = (Model.EF.ProductCategory)ViewBag.Category;
     ViewBag.Title = category.Name;
@@ -9,10 +8,10 @@
 <div class="content">
     <div class="content_top">
         <div class="heading">
-            <h3>@ViewBag.Title</h3>
+            <h3>@category.Name</h3>
         </div>
         <div class="see">
-            <p><a href="#">See all Products</a></p>
+            <p><a href="/san-pham">See all Products</a></p>
         </div>
         <div class="clear"></div>
     </div>
