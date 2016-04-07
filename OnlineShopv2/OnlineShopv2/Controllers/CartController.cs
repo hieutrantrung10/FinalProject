@@ -27,7 +27,17 @@ namespace OnlineShopv2.Controllers
             }
             return View(list);
         }
-       
+
+        public ActionResult WishList()
+        {
+            var wish = Session[Common.CommonConstants.WishSession];
+            var lst = new List<CartItem>();
+            if (wish != null)
+            {
+                lst = (List<CartItem>)wish;
+            }
+            return View(lst);
+        }
         public JsonResult DeleteAll()
         {
             Session[Common.CommonConstants.CartSession] = null;
@@ -150,6 +160,7 @@ namespace OnlineShopv2.Controllers
                     orderDetail.OrderID = id;
                     orderDetail.Price = item.Product.Price;
                     orderDetail.Quantity = item.Quantity;
+                    //bổ sung vào trong bảng SQL về tên sản phẩm và đơn giá sản phẩm 
                     detailDao.Insert(orderDetail);
 
                     total += (item.Product.Price.GetValueOrDefault(0)*item.Quantity);
@@ -191,6 +202,110 @@ namespace OnlineShopv2.Controllers
         public ActionResult Success()
         {
             return View();
+        }
+
+        public ActionResult AddWishList(long productId, int quantity)
+        {
+            var product = new ProductDao().GetByID(productId);
+            var wish = Session[Common.CommonConstants.WishSession];
+            if (wish != null)
+            {
+                var list = (List<CartItem>)wish;
+                if (list.Exists(x => x.Product.ID == productId))
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Product.ID == productId)
+                        {
+                            item.Quantity += quantity;
+                        }
+                    }
+                }
+                else
+                {
+                    //tao moi 1 doi tuong CartItem
+                    var item = new CartItem();
+                    item.Product = product;
+                    item.Quantity = quantity;
+                    list.Add(item);
+                }
+                Session[Common.CommonConstants.WishSession] = list;
+            }
+            else
+            {
+                //tao moi 1 doi tuong CartItem
+                var item = new CartItem();
+                item.Product = product;
+                item.Quantity = quantity;
+                var list = new List<CartItem>();
+                list.Add(item);
+                //Gan vao session
+                Session[Common.CommonConstants.WishSession] = list;
+            }
+            return RedirectToAction("WishList");
+        }
+        public JsonResult DeleteWishList(long id)
+        {
+            var sessionwish = (List<CartItem>)Session[Common.CommonConstants.WishSession];
+            sessionwish.RemoveAll(x => x.Product.ID == id);
+            Session[Common.CommonConstants.WishSession] = sessionwish;
+            return Json(new
+            {
+                status = true
+            });
+        }
+        public JsonResult DeleteAllWishList()
+        {
+            Session[Common.CommonConstants.WishSession] = null;
+            return Json(new
+            {
+                status = true
+            });
+        }
+        public JsonResult AddToCart(long id)
+        {
+            var sessionwish = (List<CartItem>)Session[Common.CommonConstants.WishSession];
+            var product = new ProductDao().GetByID(id);
+            var cart = Session[Common.CommonConstants.CartSession];
+            if (cart != null)
+            {
+                var list = (List<CartItem>)cart;
+                if (list.Exists(x => x.Product.ID == id))
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Product.ID == id)
+                        {
+                            item.Quantity += 1;
+                        }
+                    }
+                }
+                else
+                {
+                    //tao moi 1 doi tuong CartItem
+                    var item = new CartItem();
+                    item.Product = product;
+                    item.Quantity = 1;
+                    list.Add(item);
+                }
+                Session[Common.CommonConstants.CartSession] = list;
+            }
+            else
+            {
+                //tao moi 1 doi tuong CartItem
+                var item = new CartItem();
+                item.Product = product;
+                item.Quantity = 1;
+                var list = new List<CartItem>();
+                list.Add(item);
+                //Gan vao session
+                Session[Common.CommonConstants.CartSession] = list;
+            }
+            //return RedirectToAction("Index");
+            return Json(new
+            {
+                status = true
+            });
         }
     }
 }

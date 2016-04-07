@@ -40,6 +40,18 @@ namespace OnlineShopv2
                namespaces: new[] { "OnlineShopv2.Controllers" }
            );
             routes.MapRoute(
+                name: "AddWishList",
+                url: "them-ua-thich",
+                defaults: new { controller = "Cart", action = "AddWishList", id = UrlParameter.Optional },
+                namespaces: new[] { "OnlineShopv2.Controllers" }
+            );
+            routes.MapRoute(
+                name: "WishList",
+                url: "muc-ua-thich",
+                defaults: new { controller = "Cart", action = "WishList", id = UrlParameter.Optional },
+                namespaces: new[] { "OnlineShopv2.Controllers" }
+            );
+            routes.MapRoute(
               name: "All Product",
               url: "san-pham",
               defaults: new { controller = "Product", action = "Index", id = UrlParameter.Optional },

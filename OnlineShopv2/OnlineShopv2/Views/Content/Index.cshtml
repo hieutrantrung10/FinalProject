@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Model.EF.Content>
+﻿@using PagedList
+@using PagedList.Mvc
+@model IEnumerable<Model.EF.Content>
 
 @{
     ViewBag.Title = "Index";
@@ -30,7 +32,7 @@
         </div>
     }
 
-    @if (ViewBag.TotalPage > 1)
+    @*@if (ViewBag.TotalPage > 1)
     {
         var pageDisplay = (int)ViewBag.MaxPage;
         int totalPage = (int)ViewBag.TotalPage;
@@ -66,6 +68,9 @@
             </ul>
         </nav>
 
-    }
+    }*@
 
+</div>
+<div>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
 </div>
